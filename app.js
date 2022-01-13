@@ -1,22 +1,33 @@
-console.log("Hello World!");
-// for(var i=0; i<3; i++){
-//     setTimeout(function(){
-//         console.log(i);
-//     })
-// }
-// for(let i=0; i<3; i++){
-//     setTimeout(function(){
-//         console.log(i);
-//     })
-// }
-// const fun = function(a, b) {
-//     return a + b;
-// }
-console.log("12" + 12);
-console.log("12" - 12);
-console.log("ab" - 12);
-console.log(+"12" + 12);
-console.log("12" + 12, '"12" + 12');
-console.log(`+"12" + 12 = ${+"12" + 12}`);
+console.log("a" + +"a" + "as");
+console.log(`a${+"a"}as`);
 
-console.log("a" + "a" * "s" + "as");
+calculation(18,5,"-");
+
+function calculation(num1, num2, action){
+    let result;
+    switch(action){
+        case "+": result = num1 + num2;
+            break;
+        case "-": result = num1 - num2;
+            break;
+        case "*": result = num1 * num2;
+            break;
+        case "/": if(num2 != 0){
+                result = num1 / num2;
+                break;
+            }
+            else
+            console.log("ERROR: division by ZERO");
+            break;
+            default: console.log("ERROR: wrong action");
+        }
+    console.log(result);
+}
+
+console.log(fun(5)(10,3));
+
+function fun(a){
+    return function(b,c){
+        return a*(b+c);
+    };
+}
