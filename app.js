@@ -1,6 +1,6 @@
 let num = 12092;
-let codingString = ".-";
-console.log(`Encoded number - "${num}" in coding string "${codingString}"${validation(codingString)(num,codingString)}`);
+let codingString = ".--";
+console.log(`Coding string: "${codingString}"  Encoded number: "${num}" => "${validation(codingString)(num,codingString)}"`);
 function encode(num, codingString){
     let res = "";
     const base = codingString.length;
@@ -10,7 +10,7 @@ function encode(num, codingString){
         res = symb + res;
         num = Math.trunc(num / base);
     } while(num >= 1);
-    return " is : " + `"${res}"`;
+    return res;
 }
 function getSymbol(digit,codingString){
     return codingString[digit];
@@ -27,6 +27,6 @@ function validation(codingString){
     }
     return res;
 }
-function logError(num, codingString){
-    return ", CANNOT BE ENCODED!!! The encoding string contains repeated characters!";
+function logError(){
+    return "CANNOT BE ENCODED!!! The encoding string contains repeated characters!";
 }
