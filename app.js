@@ -1,11 +1,11 @@
-let num = 1256;
-let codingString = "01234567";
+let num = 12092;
+let codingString = ".-";
 console.log(`Encoded number - "${num}" in coding string "${codingString}"${validation(codingString)(num,codingString)}`);
 function encode(num, codingString){
     let res = "";
-    let base = codingString.length;
+    const base = codingString.length;
     do {
-        let digit = Math.trunc(num % base);
+        const digit = Math.trunc(num % base);
         const symb = getSymbol(digit,codingString);
         res = symb + res;
         num = Math.trunc(num / base);
