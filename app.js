@@ -31,19 +31,28 @@ function spacesInLine(row, element){
      }
     return row;
 }
+
 const matrix = [[1, 22, 3], [4, 1312, 659], [71, 8, 9], [100, 0, 12]];
 displayMatrix(matrix);
 console.log();
 matrixTransp(matrix);
-
+console.log();
 
 const arHw = [13, 28, 4, 15, 25, -10, 40, 17,27];
-arHw.sort(function (a, b){
-    if(a % 2 != 0 && b % 2 != 0){
-        return b - a;
-    }
-    else if(a % 2 == 0 && b % 2 == 0){
-            return a - b;
-        }
-});
 console.log(`arHW is ${arHw.toString()}`);
+arHw.sort(function (a, b){
+   if(a % 2 != 0 && b % 2 != 0){
+      return b - a;
+   }
+   else if(a % 2 == 0 && b % 2 == 0){
+         return a - b;
+   }
+   else if(a % 2 != 0 && b % 2 == 0){
+         return  1;
+   }
+   else if(a % 2 == 0 && b % 2 != 0){
+         return -1;
+   }
+        
+});
+console.log(`arHW sorted is ${arHw.toString()}`);
