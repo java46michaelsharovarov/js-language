@@ -1,36 +1,38 @@
-function myForEach(array, callbackFn){
-    for(let i = 0; i < array.length; i++){
-        callbackFn(array[i], i, array);
-    }
+function createAddress(city, street) {
+        return {city, street};
 };
-function myFilter(array, callbackFn) {
-    const arrayRes = [];
-    myForEach(array, (n, i, a) => callbackFn(n, i, a) ? arrayRes.push(n) : -1);
-    return arrayRes;    
+function createPerson(id, name, address) {
+        return {id, name, address};
 };
-function myReduce(array, callbackFnReduce, vol) {
-    let res;
-    if(vol == undefined){
-        const array2 = array.slice();
-        res = array2.shift();
-        myForEach(array2, n => res = callbackFnReduce(res, n));
-    }
-    else{    
-    res = vol;
-    myForEach(array, n => res = callbackFnReduce(res, n));
-    }
-    return res;
+const persons = [
+        createPerson(123, "Vasya", createAddress("Rehovot","Parshani")),
+        createPerson(124, "Olya", createAddress("Rehovot","Pr. Plaut")),
+        createPerson(125, "Tolya", createAddress("Tel-Aviv","Dizengoff")),
+        createPerson(126, "Sara", createAddress('Lod', 'Sokolov'))
+];
+function getPersonsCity(persons, city){
+    const arRes = persons.filter(n => n.address.city === city);
+    return arRes;
 };
+// function movePersonsNoCityAtBeginning(persons, city){
+//     const arRes = [];
+//     persons.forEach(n => n.address.city != city ? arRes.unshift(n) : arRes.push(n));
+//     return arRes;
+// };
+function movePersonsNoCityAtBeginning(persons, city){
+    const arRes = persons.filter(n => n.address.city === city);
+    const arRes1 = persons.filter(n => n.address.city != city);
+    return arRes1.concat(arRes);
+};
+// function movePersonsNoCityAtBeginning(persons, city){
+//     const arRes = persons.slice();
+//     arRes.sort(n => n.address.city != city ? -1 : 1);    
+//     return arRes;
+// };
 
 let test = () => {
-    const ar = [6, 2, 8, 7, 5, 56];
-    const arEvenOdd = myFilter(ar, (n, _i, a) => a.length % 2 == 0 ? n % 2 == 0 : n % 2 == 1);
-    console.log(arEvenOdd);
-    let res = myReduce(ar, (res, n) => res + n, 1); 
-    console.log(`Reduce with initialValue: ${res}`);
-    res = myReduce(ar, (res, n) => res + n); 
-    console.log(`Reduce without initialValue: ${res}`);
-    
+    console.log(getPersonsCity(persons, "Rehovot"));
+    console.log(movePersonsNoCityAtBeginning(persons, "Rehovot"));
 };
 
 test();
