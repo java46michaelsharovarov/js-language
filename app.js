@@ -33,6 +33,7 @@ function movePersonsNoCityAtBeginning(persons, city){
 let test = () => {
     console.log(getPersonsCity(persons, "Rehovot"));
     console.log(movePersonsNoCityAtBeginning(persons, "Rehovot"));
+    console.log(getPersonsCity(persons, "Rehovot").reduce((res, cur) => res.id < cur.id ? res = cur : res).name);
 };
 
 test();
