@@ -1,39 +1,23 @@
-function createAddress(city, street) {
-        return {city, street};
-};
-function createPerson(id, name, address) {
-        return {id, name, address};
-};
-const persons = [
-        createPerson(123, "Vasya", createAddress("Rehovot","Parshani")),
-        createPerson(124, "Olya", createAddress("Rehovot","Pr. Plaut")),
-        createPerson(125, "Tolya", createAddress("Tel-Aviv","Dizengoff")),
-        createPerson(126, "Sara", createAddress('Lod', 'Sokolov'))
-];
-function getPersonsCity(persons, city){
-    const arRes = persons.filter(n => n.address.city === city);
-    return arRes;
-};
-// function movePersonsNoCityAtBeginning(persons, city){
-//     const arRes = [];
-//     persons.forEach(n => n.address.city != city ? arRes.unshift(n) : arRes.push(n));
-//     return arRes;
-// };
-function movePersonsNoCityAtBeginning(persons, city){
-    const arRes = persons.filter(n => n.address.city === city);
-    const arRes1 = persons.filter(n => n.address.city != city);
-    return arRes1.concat(arRes);
-};
-// function movePersonsNoCityAtBeginning(persons, city){
-//     const arRes = persons.slice();
-//     arRes.sort(n => n.address.city != city ? -1 : 1);    
-//     return arRes;
-// };
-
-let test = () => {
-    console.log(getPersonsCity(persons, "Rehovot"));
-    console.log(movePersonsNoCityAtBeginning(persons, "Rehovot"));
-    console.log(getPersonsCity(persons, "Rehovot").reduce((res, cur) => res.id < cur.id ? res = cur : res).name);
-};
-
-test();
+// input: ["lmn", "d", "d", "lmn", "a", "lmn", "a", "bc"]
+// output: 
+// lmn -> 3
+// a -> 2
+// d -> 2
+// bc -> 1
+function displayOccurrences(array) {
+    const res = {};
+    for(let i = 0; i < array.length; i++) {
+        if (res[array[i]] === undefined) {
+            res[array[i]] = 1;
+        } else {
+            res[array[i]] = res[array[i]] + 1;
+        }
+    }
+    Object.entries(res).sort((e1, e2) => {
+        const res = e2[1] - e1[1];
+        return res === 0 ? e1[0].localeCompare(e2[0]) : res;
+    }).forEach(e => console.log(`${e[0]} -> ${e[1]}`));
+    console.log(res);
+}
+const ar = ["lmn", "d", "d", "lmn", "a", "lmn", "a", "bc"];
+displayOccurrences(ar);
