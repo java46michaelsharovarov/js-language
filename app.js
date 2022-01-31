@@ -1,25 +1,11 @@
 function displayOccurrences(array) {
-    const res = array.reduce((acc, n) => ((acc[n] === undefined ? acc[n] = 1 : acc[n] += 1), acc), {});
-    Object.entries(res).sort((e1, e2) => {
-        const res = e2[1] - e1[1];
-        return res === 0 ? e1[0].localeCompare(e2[0]) : res;
-    }).forEach(e => console.log(`${e[0]} -> ${e[1]}`));
-    console.log(res);
+    const res = array.reduce((acc, n) => (acc[n] = (acc[n] || 0) + 1, acc), {});
+    sortArray(res).forEach(e => console.log(`${e[0]} -> ${e[1]}`));
 }
-function countBy(arr, callbackFn) {
-    const res = arr.reduce((acc, n) => {
-        n = callbackFn(n);
-        acc[n] === undefined ? acc[n] = 1 : acc[n] += 1;
-        return acc;
-    }, {});
-    return res;
-}
-function createAddress (city, street) {
-    return {city, street}
-}
-function createPerson(id, name, address) {
-    return {id, name, address}
-}
+const sortArray = (array) => Object.entries(array).sort((e1, e2) => e2[1] - e1[1] || e1[0].localeCompare(e2[0]));
+const countBy = (arr, returnKey) => arr.reduce((acc, n) => (n = returnKey(n), acc[n] = (acc[n] || 0) + 1, acc), {});
+const createAddress = (city, street) => ({city, street});
+const createPerson = (id, name, address) => ({id, name, address});
 
 function countByAdditional(arr, callbackFn, callbackFn2) {
     const res = arr.reduce((acc, n) => {
