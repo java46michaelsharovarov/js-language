@@ -4,9 +4,8 @@ function Deferred() {
 Deferred.prototype.then = function (element) {
     this.array.push(element); 
 }
-Deferred.prototype.resolve = function (str) {
-    this.res = str;
-    this.array.forEach((n) => this.res = n(this.res));
+Deferred.prototype.resolve = function (res) {
+    this.array.forEach(n => res = n(res));
 }
 const d = new Deferred()
 d.then(function(res){ console.log('1 ', res); return 'a'; });
@@ -22,7 +21,7 @@ function MyArray(vol) {
     this.vol = vol;
 }
 MyArray.prototype.get = function (index) {
-    return this.array[index] = this.array[index] || this.vol;
+    return this.array[index] ?? this.vol;
 } 
 MyArray.prototype.set = function (index, vol) {
     this.array[index] = vol;
@@ -33,7 +32,7 @@ MyArray.prototype.setValue = function (vol) {
 }
 const myArray = new MyArray(10);
 console.log(myArray.get(100)) // displayed out 10
-myArray.set(100, 500)         //sets 500 at index 100
+myArray.set(100, 0)         //sets 500 at index 100
 console.log(myArray.get(100)) //displayed out 500
 myArray.setValue(300);
 console.log(myArray.get(100)) //displayed out 300
