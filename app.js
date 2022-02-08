@@ -65,10 +65,9 @@ function countOfPersonType(persons, type) {
 }
 function computeSalaryBudget(persons) {
     return persons.reduce((salary, n) => "computeSalary" in n ? salary + n.computeSalary(): salary, 0);
-    // return persons.reduce((salary, n) => n.toString().includes('salary') ? salary + n.computeSalary(): salary, 0);
 }
 function countChildrenGindergarten(persons, kindergarten) {
-    return persons.reduce((count, n) => n.toString().includes(kindergarten) ? ++count : count, 0);
+    return persons.reduce((count, n) => "getKindergarten" in n && n.getKindergarten() === kindergarten? ++count : count, 0);
 }
 console.log(countOfPersonType(persons, 'WageEmployee'));
 console.log(computeSalaryBudget(persons));
