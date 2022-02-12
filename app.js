@@ -6,7 +6,7 @@ function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function concatinate(prefix) {
-             return text => prefix + text;   
+        return text => prefix + text;   
 }
         
 console.log(getRandomNumber(0, 1)); //Example getRandomNumber(0, 1) -> returns number that is either 0 or 1
