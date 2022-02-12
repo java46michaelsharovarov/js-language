@@ -1,74 +1,15 @@
-class Person {
-    #id;
-    #name;
-    constructor(id, name) {
-            this.#id = id;
-            this.#name = name;
-    }
-    getId() {
-            return this.#id;
-    }
-    getName() {
-            return this.#name;
-    }
-    toString() {
-            return `id: ${this.#id}; name: ${this.#name};`
-    }
+function getRandomNumber(min, max) {
+        min > max ? [min, max] = [max, min] : 0;
+         //if min > max then you should swap values without additional variable in one line code
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-class Employee extends Person {
-    #salary;
-    constructor(id, name, salary) {
-            super(id, name);
-            this.#salary = salary;
-    }
-    computeSalary() {
-            return this.#salary;
-    }
-    toString() {
-            return super.toString() + ` salary: ${this.computeSalary()}`;
-    }
+function concatinate(prefix) {
+             return text => prefix + text;   
 }
-class Child extends Person {
-    #kindergarten;
-    constructor(id, name, kindergarten) {
-         super(id, name);
-         this.#kindergarten = kindergarten; 
-    }
-    getKindergarten() {
-            return this.#kindergarten;
-    }
-    toString() {
-            return super.toString() + ` kindergarten: ${this.#kindergarten}`;
-    }
-}
-class WageEmployee extends Employee {
-    #hours;
-    #wage;
-    constructor(id, name, salary, hours, wage) {
-            super(id, name, salary);
-            this.#hours = hours;
-            this.#wage = wage;
-    }
-    computeSalary() {
-            return super.computeSalary() + this.#hours * this.#wage;
-    }
-}
-const persons = [
-    new Child(100, 'Olya', 'Shalom'),
-    new Child(101, 'Serega', "Boker"),
-    new Child(102, 'Kolya', 'Shalom'),
-    new Employee(103, 'Vasya', 1000),    
-    new WageEmployee(104, 'Tolya', 1000, 10, 100)
-]
-function countOfPersonType(persons, type) {
-    return persons.reduce((count, n) => n.constructor.name == type ? ++count : count, 0);
-}
-function computeSalaryBudget(persons) {
-    return persons.reduce((salary, n) => "computeSalary" in n ? salary + n.computeSalary(): salary, 0);
-}
-function countChildrenGindergarten(persons, kindergarten) {
-    return persons.reduce((count, n) => "getKindergarten" in n && n.getKindergarten() === kindergarten? ++count : count, 0);
-}
-console.log(countOfPersonType(persons, 'WageEmployee'));
-console.log(computeSalaryBudget(persons));
-console.log(countChildrenGindergarten(persons, 'Shalom'));
+        
+console.log(getRandomNumber(0, 1)); //Example getRandomNumber(0, 1) -> returns number that is either 0 or 1
+const concatApp = concatinate('App - ');
+const concatMessage = concatApp('Test status: Done');
+console.log(concatMessage); //there should be displayed out App - Test status: Done
