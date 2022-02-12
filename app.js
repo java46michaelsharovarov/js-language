@@ -1,74 +1,38 @@
-class Person {
-    #id;
-    #name;
-    constructor(id, name) {
-            this.#id = id;
-            this.#name = name;
-    }
-    getId() {
-            return this.#id;
-    }
-    getName() {
-            return this.#name;
-    }
-    toString() {
-            return `id: ${this.#id}; name: ${this.#name};`
-    }
+const point = {
+        x: 3,
+        y: 4
+};
+function displayPointInSpace(z, t) {
+        //"this" - reference to any object having properties x and y
+        console.log(`x: ${this.x}, y: ${this.y}, z: ${z}, t: ${t}`)
 }
-class Employee extends Person {
-    #salary;
-    constructor(id, name, salary) {
-            super(id, name);
-            this.#salary = salary;
-    }
-    computeSalary() {
-            return this.#salary;
-    }
-    toString() {
-            return super.toString() + ` salary: ${this.computeSalary()}`;
-    }
+// point.method = displayPointInSpace;
+// point.method(10, 20);
+// displayPointInSpace.call(point, 10, 20);
+// displayPointInSpace.mybind(point, 10, 20)();
+// displayPointInSpace.apply(point, [10, 20]);
+Function.prototype.mybind = function(thisObj, ...args) {
+        //this - reference to any functional object (in example - displayPointInSpace)
+        //thisObject - reference to any object (in example - point) 
+        
+        return (...params) => {
+                thisObj.method123456 = this;
+                const res = thisObj.method123456(...args.concat(params));
+                delete thisObj.method123456;
+                return res;
+        }
 }
-class Child extends Person {
-    #kindergarten;
-    constructor(id, name, kindergarten) {
-         super(id, name);
-         this.#kindergarten = kindergarten; 
-    }
-    getKindergarten() {
-            return this.#kindergarten;
-    }
-    toString() {
-            return super.toString() + ` kindergarten: ${this.#kindergarten}`;
-    }
-}
-class WageEmployee extends Employee {
-    #hours;
-    #wage;
-    constructor(id, name, salary, hours, wage) {
-            super(id, name, salary);
-            this.#hours = hours;
-            this.#wage = wage;
-    }
-    computeSalary() {
-            return super.computeSalary() + this.#hours * this.#wage;
-    }
-}
-const persons = [
-    new Child(100, 'Olya', 'Shalom'),
-    new Child(101, 'Serega', "Boker"),
-    new Child(102, 'Kolya', 'Shalom'),
-    new Employee(103, 'Vasya', 1000),    
-    new WageEmployee(104, 'Tolya', 1000, 10, 100)
-]
-function countOfPersonType(persons, type) {
-    return persons.reduce((count, n) => n.constructor.name == type ? ++count : count, 0);
-}
-function computeSalaryBudget(persons) {
-    return persons.reduce((salary, n) => "computeSalary" in n ? salary + n.computeSalary(): salary, 0);
-}
-function countChildrenGindergarten(persons, kindergarten) {
-    return persons.reduce((count, n) => "getKindergarten" in n && n.getKindergarten() === kindergarten? ++count : count, 0);
-}
-console.log(countOfPersonType(persons, 'WageEmployee'));
-console.log(computeSalaryBudget(persons));
-console.log(countChildrenGindergarten(persons, 'Shalom'));
+/****************************************************** */
+//arguments are passed at function call
+const funDisplay = displayPointInSpace.mybind(point);
+funDisplay(10, 20); //function call 
+/************************************************************ */
+/********************************************************** */
+//all arguments are bound by the method "mybind"
+const funDisplayArguments = displayPointInSpace.mybind(point, 10, 20);
+funDisplayArguments()
+/***************************************************************** */
+//mixed - part of arguments are bound by the method "mybind"
+// and other part of arguments are passed at function call
+const funDisplayMixed = displayPointInSpace.mybind(point, 10);
+funDisplayMixed(20) 
